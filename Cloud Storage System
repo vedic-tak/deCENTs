@@ -1,0 +1,93 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@vedic-tak 
+
+/
+decentralized-Cloud
+Public
+Code
+Issues
+Pull requests
+1
+Actions
+Projects
+Wiki
+Security
+Insights
+decentralized-Cloud/contracts/cloud.sol
+Latest commit ac31a42 on Jul 12, 2020
+ History
+ 1 contributor
+54 lines (41 sloc)  1.04 KB
+   
+pragma solidity ^0.5.0;
+pragma experimental ABIEncoderV2;
+
+
+/**
+* @title cloud
+*/
+contract cloud {
+ 
+    address owner;
+  
+    modifier onlyowner
+    {
+         require(msg.sender==owner,"You are not allowed");
+         _;
+    }
+   
+   bytes32 d;
+   
+   struct file {
+       string hash;
+       string mimetype;
+       string name;
+   }
+
+  mapping(address => file[]) files_per_user;
+  
+  
+  function getMyFiles() public view returns (file [] memory)
+   {
+       return files_per_user[msg.sender];
+   }
+   
+   function addMyfile(string memory _hash,string memory _mimetype, string memory _name) public
+   {
+        file memory t;
+        t.hash = _hash;
+        t.mimetype = _mimetype;
+        t.name = _name;
+        files_per_user[msg.sender].push(t);
+     
+   }
+   
+   function shareMyfile(address _add, string memory _hash,string memory _mimetype, string memory _name) public
+   { 
+        file memory t;
+        t.hash = _hash;
+        t.mimetype = _mimetype;
+        t.name = _name;
+        files_per_user[_add].push(t);
+       
+   }
+}
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Loading complete
